@@ -13,7 +13,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           release-type: ruby
-          package-name: gem-release-demo
+          package-name: bridgetown-plausible
           bump-minor-pre-major: true
           version-file: "lib/bridgetown-plausible/version.rb"
       - uses: actions/checkout@v2
