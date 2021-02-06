@@ -5,7 +5,11 @@
 </p>
 
 <p align="center">
+  <a href="https://badge.fury.io/rb/bridgetown-plausible"><img src="https://badge.fury.io/rb/bridgetown-plausible.svg" alt="Gem Version" height="18"></a>
   <img src="https://img.shields.io/github/license/bt-rb/.github">
+  <img src="https://github.com/bt-rb/bridgetown-plausible/workflows/Test/badge.svg" alt="test">
+  <img src="https://github.com/bt-rb/bridgetown-plausible/workflows/Lint/badge.svg" alt="lint">
+  <img src="https://github.com/bt-rb/bridgetown-plausible/workflows/Release/badge.svg" alt="release">
 </p>
 
 <h2 align="center">bridgetown-plausible</h2>
