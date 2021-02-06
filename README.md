@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/bt-rb" target="_blank" rel="noopener noreferrer">
-    <img src=".github/media/logo.svg" width="100px">
+    <img src="https://github.com/bt-rb/bridgetown-plausible/blob/main/.github/media/logo.svg" width="100px">
   </a>
 </p>
 
