@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ metadata.title }}</title>
+    <meta name="description" content="{{ metadata.description }}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mini.css/3.0.1/mini-default.min.css">
+  </head>
+  <body class="{{ page.layout }} {{ page.page_class }}">
+    <header>
+      <a href="/" class="button">Home</a>
+      <a href="/liquid" class="button">Liquid</a>
+      <a href="/erb" class="button">ERB</a>
+    </header>
+    <main>
+      <section class="row">
+        <div class="col-sm-12">
+          <article class="card fluid">
+            {{ content }}
+          </article>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
