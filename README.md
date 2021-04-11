@@ -35,7 +35,7 @@
 Use the automation to add to your site:
 
 ```sh
-bundle exec bridgetown apply https://github.com/btrb/bridgetown-plausible
+bundle exec bridgetown apply https://github.com/bt-rb/bridgetown-plausible
 ```
 
 ## System requirements
