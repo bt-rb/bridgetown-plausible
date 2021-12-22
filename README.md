@@ -56,7 +56,7 @@ or add manually in `Gemfile`:
 
 ```ruby
 group :bridgetown_plugins do
-  gem "bridgetown-plausible", "~> 0.1.0"
+  gem "bridgetown-plausible", "~> 1.0.2"
 end
 ```
 
