@@ -5,11 +5,11 @@ module Bridgetown
     class Builder < Bridgetown::Builder
       def build
         liquid_tag "plausible" do |_attributes, tag|
-          render
+          render.html_safe
         end
 
         helper "plausible" do
-          render
+          render.html_safe
         end
       end
 
