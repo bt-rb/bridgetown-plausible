@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.1.0](https://www.github.com/bt-rb/bridgetown-plausible/compare/v1.0.2...v1.1.0)
+
+### Feature
+
+* opiontally provide different server instance
+* update demo bridgetown to version 1.1.0
+
 ### [1.0.2](https://www.github.com/bt-rb/bridgetown-plausible/compare/v1.0.1...v1.0.2) (2021-12-22)
 
 
@@ -16,7 +23,7 @@
 
 * fix gem name in release action ([a3614df](https://www.github.com/bt-rb/bridgetown-plausible/commit/a3614df2cdddea6314b9baddcb697b3aa07b0c7f))
 
-## 1.0.0 (2021-02-06)
+## [1.0.0] (2021-02-06)
 
 
 ### Bug Fixes
