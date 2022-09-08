@@ -74,6 +74,13 @@ plausible:
   # Type: String
   # Required: true
   domain: example.com
+  # Your selfhosted Plausible instance.
+  # If omitted, this will fall back to "plausible.io".
+  # Assumes https.
+  #
+  # Type: String
+  # Required: false
+  server: selfhosted-plausible.com
 ```
 
 ## Usage

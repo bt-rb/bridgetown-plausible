@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.authors = ["Andrew Mason"]
   spec.email = ["andrewmcodes@protonmail.com"]
   spec.summary = "Plausible Analytics Plugin for Bridgetown"
-  spec.description = "A Liquid tag to add Plausible analytics to your site."
+  spec.description = "A Liquid/erb tag to add Plausible analytics to your site."
   spec.homepage = "https://github.com/bt-rb/#{spec.name}"
   spec.license = "MIT"
   spec.metadata = {
