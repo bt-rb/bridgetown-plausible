@@ -21,13 +21,22 @@ describe(Bridgetown::Plausible) do
     end
 
     context "when the rendering engine is liquid" do
-      let(:contents) { File.read(dest_dir("liquid.html")) }
+      let(:contents) { File.read(dest_dir("liquid/index.html")) }
 
       context "when the domain is configured" do
-        let(:overrides) { {"plausible" => {"domain" => "example.com"}} }
+        let(:overrides) { {"plausible" => {"domain" => "tracked-site.com"}} }
         it "outputs the correct HTML" do
           expect(contents).to match <<~HTML
-            <script async defer data-domain="example.com" src="https://plausible.io/js/plausible.js"></script>
+            <script async defer data-domain="tracked-site.com" src="https://plausible.io/js/plausible.js"></script>
+          HTML
+        end
+      end
+
+      context "when server && domain are configured" do
+        let(:overrides) { {"plausible" => {"server" => "selfhosted-plausible.com", "domain" => "tracked-site.com"}} }
+        it "outputs the correct HTML" do
+          expect(contents).to match <<~HTML
+            <script async defer data-domain="tracked-site.com" src="https://selfhosted-plausible.com/js/plausible.js"></script>
           HTML
         end
       end
@@ -42,13 +51,22 @@ describe(Bridgetown::Plausible) do
     end
 
     context "when the rendering engine is erb" do
-      let(:contents) { File.read(dest_dir("erb.html")) }
+      let(:contents) { File.read(dest_dir("erb/index.html")) }
 
       context "when the domain is configured" do
-        let(:overrides) { {"plausible" => {"domain" => "example.com"}} }
+        let(:overrides) { {"plausible" => {"domain" => "tracked-site.com"}} }
         it "outputs the correct HTML" do
           expect(contents).to match <<~HTML
-            <script async defer data-domain="example.com" src="https://plausible.io/js/plausible.js"></script>
+            <script async defer data-domain="tracked-site.com" src="https://plausible.io/js/plausible.js"></script>
+          HTML
+        end
+      end
+
+      context "when server && domain are configured" do
+        let(:overrides) { {"plausible" => {"server" => "selfhosted-plausible.com", "domain" => "tracked-site.com"}} }
+        it "outputs the correct HTML" do
+          expect(contents).to match <<~HTML
+            <script async defer data-domain="tracked-site.com" src="https://selfhosted-plausible.com/js/plausible.js"></script>
           HTML
         end
       end
@@ -70,13 +88,22 @@ describe(Bridgetown::Plausible) do
     end
 
     context "when the rendering engine is liquid" do
-      let(:contents) { File.read(dest_dir("liquid.html")) }
+      let(:contents) { File.read(dest_dir("liquid/index.html")) }
 
       context "when the domain is configured" do
         let(:overrides) { {"plausible" => {"domain" => "example.com"}} }
         it "outputs the correct HTML" do
           expect(contents).to match <<~HTML
             <!-- <script async defer data-domain="example.com" src="https://plausible.io/js/plausible.js"></script> -->
+          HTML
+        end
+      end
+
+      context "when server && domain are configured" do
+        let(:overrides) { {"plausible" => {"server" => "selfhosted-plausible.com", "domain" => "tracked-site.com"}} }
+        it "outputs the correct HTML" do
+          expect(contents).to match <<~HTML
+            <!-- <script async defer data-domain="tracked-site.com" src="https://selfhosted-plausible.com/js/plausible.js"></script> -->
           HTML
         end
       end
@@ -91,13 +118,22 @@ describe(Bridgetown::Plausible) do
     end
 
     context "when the rendering engine is erb" do
-      let(:contents) { File.read(dest_dir("erb.html")) }
+      let(:contents) { File.read(dest_dir("erb/index.html")) }
 
       context "when the domain is configured" do
         let(:overrides) { {"plausible" => {"domain" => "example.com"}} }
         it "outputs the correct HTML" do
           expect(contents).to match <<~HTML
             <!-- <script async defer data-domain="example.com" src="https://plausible.io/js/plausible.js"></script> -->
+          HTML
+        end
+      end
+
+      context "when server && domain are configured" do
+        let(:overrides) { {"plausible" => {"server" => "selfhosted-plausible.com", "domain" => "tracked-site.com"}} }
+        it "outputs the correct HTML" do
+          expect(contents).to match <<~HTML
+            <!-- <script async defer data-domain="tracked-site.com" src="https://selfhosted-plausible.com/js/plausible.js"></script> -->
           HTML
         end
       end
