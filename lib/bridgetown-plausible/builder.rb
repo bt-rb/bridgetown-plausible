@@ -19,13 +19,13 @@ module Bridgetown
         domain = options.dig(:domain)&.strip
         server = options.dig(:server)&.strip || "plausible.io"
 
-        tag = if domain && server
-          markup_for_snippet(domain, server)
+        tag = if domain
+          markup_for_domain(domain, server)
         else
-          Bridgetown.logger.warn "Plausible", "Domain and/or server not configured."
-          markup_for_snippet("NOT CONFIGURED", server)
+          Bridgetown.logger.warn "Plausible", "Domain not configured."
+          markup_for_domain("NOT CONFIGURED", server)
         end
-
+        
         return wrap_with_comment(tag) unless Bridgetown.environment.production?
 
         tag
