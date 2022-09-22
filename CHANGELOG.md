@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://www.github.com/bt-rb/bridgetown-plausible/compare/v1.0.2...v1.1.0) (2022-09-22)
+
+
+### Features
+
+* make server configurable ([#11](https://www.github.com/bt-rb/bridgetown-plausible/issues/11)) ([5c5cd29](https://www.github.com/bt-rb/bridgetown-plausible/commit/5c5cd296477bee6eb6ce38e32051968291995d44))
+
 ### [1.0.2](https://www.github.com/bt-rb/bridgetown-plausible/compare/v1.0.1...v1.0.2) (2021-12-22)
 
 
