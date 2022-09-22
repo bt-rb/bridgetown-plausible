@@ -17,12 +17,13 @@ module Bridgetown
 
       def render
         domain = options.dig(:domain)&.strip
+        server = options.dig(:server)&.strip || "plausible.io"
 
         tag = if domain
-          markup_for_domain(domain)
+          markup_for_snippet(domain, server)
         else
           Bridgetown.logger.warn "Plausible", "Domain not configured."
-          markup_for_domain("NOT CONFIGURED")
+          markup_for_snippet("NOT CONFIGURED", server)
         end
 
         return wrap_with_comment(tag) unless Bridgetown.environment.production?
@@ -30,8 +31,8 @@ module Bridgetown
         tag
       end
 
-      def markup_for_domain(domain)
-        "<script async defer data-domain=\"#{domain}\" src=\"https://plausible.io/js/plausible.js\"></script>"
+      def markup_for_snippet(domain, server)
+        "<script async defer data-domain=\"#{domain}\" src=\"https://#{server}/js/plausible.js\"></script>"
       end
 
       def wrap_with_comment(tag)

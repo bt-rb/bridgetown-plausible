@@ -56,7 +56,7 @@ or add manually in `Gemfile`:
 
 ```ruby
 group :bridgetown_plugins do
-  gem "bridgetown-plausible", "~> 1.0.2"
+  gem "bridgetown-plausible", "~> 1.1.0"
 end
 ```
 
@@ -74,6 +74,14 @@ plausible:
   # Type: String
   # Required: true
   domain: example.com
+  # Your Plausible instance domain.
+  # Only set this if you are self-hosting Plausible on your own domain.
+  # Requires https.
+  #
+  # Type: String
+  # Required: false
+  # Default: "plausible.io"
+  server: selfhosted-plausible.com
 ```
 
 ## Usage
