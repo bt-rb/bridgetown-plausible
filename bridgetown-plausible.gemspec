@@ -21,9 +21,9 @@ Gem::Specification.new do |spec|
   spec.files = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|script|spec|features|frontend)/}) }
   spec.test_files = spec.files.grep(%r{^spec/})
   spec.require_paths = ["lib"]
-  spec.required_ruby_version = Gem::Requirement.new(">= 2.5.0")
+  spec.required_ruby_version = Gem::Requirement.new(">= 2.7.0")
 
-  spec.add_dependency "bridgetown", ">= 0.16", "< 2.0"
+  spec.add_dependency "bridgetown", "1.2.0.beta2", "< 2.0"
 
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "nokogiri", "~> 1.6"

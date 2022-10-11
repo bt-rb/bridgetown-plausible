@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 require "bridgetown"
+
+Bridgetown.begin!
+
 require File.expand_path("../lib/bridgetown-plausible", __dir__)
 
 Bridgetown.logger.log_level = :error

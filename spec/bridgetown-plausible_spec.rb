@@ -10,7 +10,9 @@ describe(Bridgetown::Plausible) do
       "root_dir" => root_dir,
       "source" => source_dir,
       "destination" => dest_dir
-    }, overrides))
+    }, overrides)).tap do |conf|
+      conf.run_initializers! context: :static
+    end
   end
   let(:site) { Bridgetown::Site.new(config) }
 
