@@ -6,7 +6,7 @@
 
 <p align="center">
   <a href="https://badge.fury.io/rb/bridgetown-plausible"><img src="https://badge.fury.io/rb/bridgetown-plausible.svg" alt="Gem Version" height="18"></a>
-  <img src="https://img.shields.io/github/license/bt-rb/.github">
+  <img src="https://img.shields.io/github/license/bt-rb/bridgetown-plausible" alt="license">
   <img src="https://github.com/bt-rb/bridgetown-plausible/workflows/Test/badge.svg" alt="test">
   <img src="https://github.com/bt-rb/bridgetown-plausible/workflows/Lint/badge.svg" alt="lint">
   <img src="https://github.com/bt-rb/bridgetown-plausible/workflows/Release/badge.svg" alt="release">
@@ -141,4 +141,4 @@ Please make sure to read the [Contributing Guide](.github/CONTRIBUTING.md) befor
 
 [MIT](https://opensource.org/licenses/MIT)
 
-Copyright (c) 2021-present, Andrew Mason
+Copyright (c) 2020-2026, Andrew Mason
