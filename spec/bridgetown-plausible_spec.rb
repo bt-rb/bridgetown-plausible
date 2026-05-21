@@ -3,14 +3,24 @@
 require "spec_helper"
 
 describe(Bridgetown::Plausible) do
+  around(:each) do |example|
+    original_env = ENV["BRIDGETOWN_ENV"]
+    example.run
+  ensure
+    ENV["BRIDGETOWN_ENV"] = original_env
+  end
+
   let(:overrides) { {} }
   let(:config) do
+    Bridgetown.reset_configuration!
     Bridgetown.configuration(Bridgetown::Utils.deep_merge_hashes({
       "full_rebuild" => true,
       "root_dir" => root_dir,
       "source" => source_dir,
       "destination" => dest_dir
-    }, overrides))
+    }, overrides)).tap do |c|
+      c.run_initializers!(context: :static)
+    end
   end
   let(:site) { Bridgetown::Site.new(config) }
 
@@ -145,6 +155,45 @@ describe(Bridgetown::Plausible) do
           HTML
         end
       end
+    end
+  end
+
+  # Direct exercise of the initializer block for the kwargs path. Drives it through a
+  # ConfigurationDSL instance just as Bridgetown's `init` flow does, so both `config.set`
+  # (write) and the kwargs forwarding match production semantics.
+  describe "initializer kwargs" do
+    def call_initializer(config, **kwargs)
+      block = Bridgetown::Current.preloaded_configuration.initializers[:"bridgetown-plausible"].block
+      dsl = Bridgetown::Configuration::ConfigurationDSL.new(scope: config, data: config)
+      dsl.instance_exec(dsl, **kwargs, &block)
+    end
+
+    def fresh_config(overrides = {})
+      Bridgetown.reset_configuration!
+      Bridgetown.configuration({"root_dir" => root_dir}.merge(overrides))
+    end
+
+    it "writes domain and server kwargs into config.plausible" do
+      config = fresh_config
+      call_initializer(config, domain: "kwargs.example.com", server: "stats.example.com")
+
+      expect(config["plausible"]["domain"]).to eq("kwargs.example.com")
+      expect(config["plausible"]["server"]).to eq("stats.example.com")
+    end
+
+    it "preserves YAML-sourced config when no kwargs are passed" do
+      config = fresh_config("plausible" => {"domain" => "yaml.example.com"})
+      call_initializer(config)
+
+      expect(config["plausible"]["domain"]).to eq("yaml.example.com")
+    end
+
+    it "lets kwargs override YAML on a per-key basis" do
+      config = fresh_config("plausible" => {"domain" => "yaml.example.com", "server" => "yaml-server.example.com"})
+      call_initializer(config, domain: "kwargs.example.com")
+
+      expect(config["plausible"]["domain"]).to eq("kwargs.example.com")
+      expect(config["plausible"]["server"]).to eq("yaml-server.example.com")
     end
   end
 end

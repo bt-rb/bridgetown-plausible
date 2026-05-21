@@ -45,5 +45,3 @@ module Bridgetown
     end
   end
 end
-
-Bridgetown::Plausible::Builder.register
