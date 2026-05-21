@@ -13,13 +13,11 @@ jobs:
     runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, 'ci skip')"
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.0.0
+          ruby-version: "3.3"
+          bundler-cache: true
       - name: Run bin/lint
-        run: |
-          gem install bundler -v 2.2.7
-          bundle install
-          bin/lint
+        run: bin/lint

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "bridgetown"
+Bridgetown.begin!
 require File.expand_path("../lib/bridgetown-plausible", __dir__)
 
 Bridgetown.logger.log_level = :error
@@ -23,9 +24,5 @@ RSpec.configure do |config|
 
   def dest_dir(*files)
     File.join(DEST_DIR, *files)
-  end
-
-  def make_context(registers = {})
-    Liquid::Context.new({}, {}, {site: site}.merge(registers))
   end
 end

@@ -40,9 +40,9 @@ bundle exec bridgetown apply https://github.com/bt-rb/bridgetown-plausible
 
 ## System requirements
 
-- Ruby >= `2.5`
+- Ruby >= `3.0`
 - Bundler
-- Bridgetown >= `0.16`
+- Bridgetown >= `1.3` (tested against Bridgetown 1.3.x and 2.x)
 
 ## Installation
 
@@ -56,7 +56,15 @@ or add manually in `Gemfile`:
 
 ```ruby
 group :bridgetown_plugins do
-  gem "bridgetown-plausible", "~> 1.1.0"
+  gem "bridgetown-plausible", "~> 2.0"
+end
+```
+
+Then register the plugin in `config/initializers.rb`:
+
+```ruby
+Bridgetown.configure do |config|
+  init :"bridgetown-plausible"
 end
 ```
 
