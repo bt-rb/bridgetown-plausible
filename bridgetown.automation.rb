@@ -5,11 +5,12 @@ server_name = ask("If you are self-hosting Plausible, what's your instance domai
 add_bridgetown_plugin "bridgetown-plausible"
 
 if File.exist?("config/initializers.rb")
-  inject_into_file "config/initializers.rb", before: /^end\s*\z/ do
-    <<~RUBY
-
-      init :"bridgetown-plausible"
-    RUBY
+  if File.read("config/initializers.rb").include?(%(init :"bridgetown-plausible"))
+    say_status :plausible, "config/initializers.rb already calls `init :\"bridgetown-plausible\"` — skipping."
+  else
+    inject_into_file "config/initializers.rb", before: /^end\s*\z/ do
+      %(\n  init :"bridgetown-plausible"\n)
+    end
   end
 else
   say_status :plausible, "config/initializers.rb not found — add `init :\"bridgetown-plausible\"` to it manually."

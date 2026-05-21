@@ -60,10 +60,12 @@ group :bridgetown_plugins do
 end
 ```
 
-Then register the plugin in `config/initializers.rb`:
+Then add the initializer inside the existing `Bridgetown.configure` block in `config/initializers.rb`:
 
 ```ruby
 Bridgetown.configure do |config|
+  # ...your existing config...
+
   init :"bridgetown-plausible"
 end
 ```
