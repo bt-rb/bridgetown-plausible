@@ -22,6 +22,7 @@
 - [Quickstart](#quickstart)
 - [System requirements](#system-requirements)
 - [Installation](#installation)
+- [Upgrading from 1.x](#upgrading-from-1x)
 - [Configuration](#configuration)
 - [Usage](#usage)
   - [Liquid](#liquid)
@@ -72,6 +73,14 @@ end
 
 Run `bundle install` and then modify your `bridgetown.config.yml` configuration to point to your Plausible domain.
 
+## Upgrading from 1.x
+
+Version 2.0 is a breaking change:
+
+- **Requires Bridgetown >= 1.3.** If you're on an older Bridgetown, stay on `bridgetown-plausible "~> 1.1"` until you can upgrade.
+- **The gem no longer auto-registers on `require`.** You must explicitly opt in by adding `init :"bridgetown-plausible"` to your `config/initializers.rb` (see [Installation](#installation)). Without this, the `{% plausible %}` tag and `plausible` helper will not be available and your Plausible script tag will silently stop rendering.
+- **Requires Ruby >= 3.0.**
+
 ## Configuration
 
 ```yml
@@ -96,7 +105,7 @@ plausible:
 
 ## Usage
 
-This plugin provides the `plausible` Liquid tag & ERB helper to your site. If `BRIDGETOWN_ENV` is not `production`, than the tag will be wrapped in an HTML comment to prevent console erros in development. Make sure you set `BRIDGETOWN_ENV="production"` when you deploy in your script or in Netlify/Vercel/etc.
+This plugin provides the `plausible` Liquid tag & ERB helper to your site. If `BRIDGETOWN_ENV` is not `production`, then the tag will be wrapped in an HTML comment to prevent console errors in development. Make sure you set `BRIDGETOWN_ENV="production"` when you deploy in your script or in Netlify/Vercel/etc.
 
 Use the tag in the head of your document:
 

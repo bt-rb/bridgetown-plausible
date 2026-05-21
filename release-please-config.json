@@ -1,0 +1,11 @@
+{
+  "packages": {
+    ".": {
+      "release-type": "ruby",
+      "package-name": "bridgetown-plausible",
+      "bump-minor-pre-major": true,
+      "version-file": "lib/bridgetown-plausible/version.rb"
+    }
+  },
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json"
+}
