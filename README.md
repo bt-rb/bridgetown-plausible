@@ -41,19 +41,23 @@ bundle exec bridgetown apply https://github.com/bt-rb/bridgetown-plausible
 
 ## System requirements
 
-- Ruby >= `3.0`
 - Bundler
 - Bridgetown >= `1.3` (tested against Bridgetown 1.3.x and 2.x)
+- Ruby version per your Bridgetown version:
+  - Bridgetown 1.3: Ruby >= `3.0`
+  - Bridgetown 2.0: Ruby >= `3.1.4`
+  - Bridgetown 2.1: Ruby >= `3.2`
+  - Bridgetown 2.2: Ruby >= `3.3`
 
 ## Installation
 
-Automatically add to `Gemfile`:
+Add to your `Gemfile`:
 
 ```bash
 bundle add bridgetown-plausible -g bridgetown_plugins
 ```
 
-or add manually in `Gemfile`:
+or manually:
 
 ```ruby
 group :bridgetown_plugins do
@@ -61,17 +65,20 @@ group :bridgetown_plugins do
 end
 ```
 
-Then add the initializer inside the existing `Bridgetown.configure` block in `config/initializers.rb`:
+Then configure the plugin in your `config/initializers.rb` — the recommended path is to pass your domain (and self-hosted server, if applicable) inline:
 
 ```ruby
 Bridgetown.configure do |config|
   # ...your existing config...
 
-  init :"bridgetown-plausible"
+  init :"bridgetown-plausible" do
+    domain "example.com"
+    # server "stats.example.com"  # optional, defaults to plausible.io
+  end
 end
 ```
 
-Run `bundle install` and then modify your `bridgetown.config.yml` configuration to point to your Plausible domain.
+Alternatively, you can configure via `bridgetown.config.yml` (see [Configuration](#configuration) below) and use the bare `init :"bridgetown-plausible"` form. Inline kwargs take precedence over YAML values when both are set.
 
 ## Upgrading from 1.x
 
@@ -79,9 +86,12 @@ Version 2.0 is a breaking change:
 
 - **Requires Bridgetown >= 1.3.** If you're on an older Bridgetown, stay on `bridgetown-plausible "~> 1.1"` until you can upgrade.
 - **The gem no longer auto-registers on `require`.** You must explicitly opt in by adding `init :"bridgetown-plausible"` to your `config/initializers.rb` (see [Installation](#installation)). Without this, builds calling `<%= plausible %>` will raise `NameError: undefined local variable or method 'plausible'`, and `{% plausible %}` will raise `Liquid::SyntaxError`.
-- **Requires Ruby >= 3.0.**
+- **Ruby version floor** follows your Bridgetown version (see [System requirements](#system-requirements)). Bridgetown 2.1+ requires Ruby >= 3.2; 2.2+ requires >= 3.3.
+- **Active Support was removed from Bridgetown in 2.1.** The plugin's `.html_safe` calls continue to work via `bridgetown-foundation`, which Bridgetown ships by default — no action needed.
 
 ## Configuration
+
+You can configure via the initializer kwargs shown in [Installation](#installation), or via `bridgetown.config.yml`:
 
 ```yml
 # bridgetown.config.yml

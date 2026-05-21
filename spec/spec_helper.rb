@@ -10,8 +10,7 @@ SOURCE_DIR = File.join(ROOT_DIR, "src")
 DEST_DIR = File.expand_path("dest", __dir__)
 
 RSpec.configure do |config|
-  config.run_all_when_everything_filtered = true
-  config.filter_run :focus
+  config.filter_run_when_matching :focus
   config.order = "random"
 
   def root_dir(*files)

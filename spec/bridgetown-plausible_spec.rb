@@ -158,9 +158,13 @@ describe(Bridgetown::Plausible) do
     end
   end
 
-  describe "initializer kwargs" do
-    # Invoke the registered :"bridgetown-plausible" initializer block as Bridgetown itself would —
-    # via the ConfigurationDSL so `config.builder` resolves correctly.
+  # The kwargs-precedence unit tests drive the initializer block through Bridgetown's internal
+  # ConfigurationDSL, which only exposes `initializers_dsl` in Bridgetown 2.x. The gem code itself
+  # works on 1.3+ (verified by the integration tests above and by manual e2e against 1.3.4) — this
+  # block tests precedence rules that aren't exercised by the YAML-driven fixture.
+  skip_kwargs_specs = !Bridgetown::Configuration.method_defined?(:initializers_dsl)
+
+  describe "initializer kwargs", skip: skip_kwargs_specs && "requires Bridgetown 2.x internals" do
     def call_initializer(config, **kwargs)
       block = Bridgetown::Current.preloaded_configuration.initializers[:"bridgetown-plausible"].block
       dsl = config.initializers_dsl(context: :static)

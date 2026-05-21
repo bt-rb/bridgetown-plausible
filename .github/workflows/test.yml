@@ -15,16 +15,25 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ruby-version: ["3.3"]
-        bridgetown-version: ["~> 1.3.4", "~> 2.2.0"]
+        include:
+          # Bridgetown 1.3 — oldest supported, sanity-check on newest Ruby
+          - { ruby: "3.1", bridgetown: "~> 1.3.4" }
+          - { ruby: "3.3", bridgetown: "~> 1.3.4" }
+          # Bridgetown 2.0 — first 2.x line (helper/filter scoping options deprecated)
+          - { ruby: "3.2", bridgetown: "~> 2.0.0" }
+          # Bridgetown 2.1 — Active Support removed (verifies .html_safe still works)
+          - { ruby: "3.2", bridgetown: "~> 2.1.0" }
+          # Bridgetown 2.2 — current
+          - { ruby: "3.3", bridgetown: "~> 2.2.0" }
     env:
-      BRIDGETOWN_VERSION: ${{ matrix.bridgetown-version }}
+      BRIDGETOWN_VERSION: ${{ matrix.bridgetown }}
     steps:
       - uses: actions/checkout@v4
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: ${{ matrix.ruby-version }}
+          ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
+          cache-version: "${{ matrix.ruby }}-${{ matrix.bridgetown }}"
       - name: Run specs
         run: bundle exec rake
