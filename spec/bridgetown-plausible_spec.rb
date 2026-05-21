@@ -3,6 +3,13 @@
 require "spec_helper"
 
 describe(Bridgetown::Plausible) do
+  around(:each) do |example|
+    original_env = ENV["BRIDGETOWN_ENV"]
+    example.run
+  ensure
+    ENV["BRIDGETOWN_ENV"] = original_env
+  end
+
   let(:overrides) { {} }
   let(:config) do
     Bridgetown.reset_configuration!
@@ -148,6 +155,43 @@ describe(Bridgetown::Plausible) do
           HTML
         end
       end
+    end
+  end
+
+  describe "initializer kwargs" do
+    # Invoke the registered :"bridgetown-plausible" initializer block as Bridgetown itself would —
+    # via the ConfigurationDSL so `config.builder` resolves correctly.
+    def call_initializer(config, **kwargs)
+      block = Bridgetown::Current.preloaded_configuration.initializers[:"bridgetown-plausible"].block
+      dsl = config.initializers_dsl(context: :static)
+      dsl.instance_exec(dsl, **kwargs, &block)
+    end
+
+    def fresh_config(overrides = {})
+      Bridgetown.reset_configuration!
+      Bridgetown.configuration({"root_dir" => root_dir}.merge(overrides))
+    end
+
+    it "writes domain and server kwargs into config.plausible" do
+      config = fresh_config
+      call_initializer(config, domain: "kwargs.example.com", server: "stats.example.com")
+
+      expect(config["plausible"]["domain"]).to eq("kwargs.example.com")
+      expect(config["plausible"]["server"]).to eq("stats.example.com")
+    end
+
+    it "preserves YAML-sourced config when no kwargs are passed" do
+      config = fresh_config("plausible" => {"domain" => "yaml.example.com"})
+      call_initializer(config)
+
+      expect(config["plausible"]["domain"]).to eq("yaml.example.com")
+    end
+
+    it "lets kwargs override YAML when both are present" do
+      config = fresh_config("plausible" => {"domain" => "yaml.example.com"})
+      call_initializer(config, domain: "kwargs.example.com")
+
+      expect(config["plausible"]["domain"]).to eq("kwargs.example.com")
     end
   end
 end
