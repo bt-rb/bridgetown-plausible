@@ -78,7 +78,7 @@ Run `bundle install` and then modify your `bridgetown.config.yml` configuration 
 Version 2.0 is a breaking change:
 
 - **Requires Bridgetown >= 1.3.** If you're on an older Bridgetown, stay on `bridgetown-plausible "~> 1.1"` until you can upgrade.
-- **The gem no longer auto-registers on `require`.** You must explicitly opt in by adding `init :"bridgetown-plausible"` to your `config/initializers.rb` (see [Installation](#installation)). Without this, the `{% plausible %}` tag and `plausible` helper will not be available and your Plausible script tag will silently stop rendering.
+- **The gem no longer auto-registers on `require`.** You must explicitly opt in by adding `init :"bridgetown-plausible"` to your `config/initializers.rb` (see [Installation](#installation)). Without this, builds calling `<%= plausible %>` will raise `NameError: undefined local variable or method 'plausible'`, and `{% plausible %}` will raise `Liquid::SyntaxError`.
 - **Requires Ruby >= 3.0.**
 
 ## Configuration
