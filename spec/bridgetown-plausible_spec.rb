@@ -158,16 +158,13 @@ describe(Bridgetown::Plausible) do
     end
   end
 
-  # The kwargs-precedence unit tests drive the initializer block through Bridgetown's internal
-  # ConfigurationDSL, which only exposes `initializers_dsl` in Bridgetown 2.x. The gem code itself
-  # works on 1.3+ (verified by the integration tests above and by manual e2e against 1.3.4) — this
-  # block tests precedence rules that aren't exercised by the YAML-driven fixture.
-  skip_kwargs_specs = !Bridgetown::Configuration.method_defined?(:initializers_dsl)
-
-  describe "initializer kwargs", skip: skip_kwargs_specs && "requires Bridgetown 2.x internals" do
+  # Direct exercise of the initializer block for the kwargs path. Drives it through a
+  # ConfigurationDSL instance just as Bridgetown's `init` flow does, so both `config.set`
+  # (write) and the kwargs forwarding match production semantics.
+  describe "initializer kwargs" do
     def call_initializer(config, **kwargs)
       block = Bridgetown::Current.preloaded_configuration.initializers[:"bridgetown-plausible"].block
-      dsl = config.initializers_dsl(context: :static)
+      dsl = Bridgetown::Configuration::ConfigurationDSL.new(scope: config, data: config)
       dsl.instance_exec(dsl, **kwargs, &block)
     end
 
@@ -191,11 +188,12 @@ describe(Bridgetown::Plausible) do
       expect(config["plausible"]["domain"]).to eq("yaml.example.com")
     end
 
-    it "lets kwargs override YAML when both are present" do
-      config = fresh_config("plausible" => {"domain" => "yaml.example.com"})
+    it "lets kwargs override YAML on a per-key basis" do
+      config = fresh_config("plausible" => {"domain" => "yaml.example.com", "server" => "yaml-server.example.com"})
       call_initializer(config, domain: "kwargs.example.com")
 
       expect(config["plausible"]["domain"]).to eq("kwargs.example.com")
+      expect(config["plausible"]["server"]).to eq("yaml-server.example.com")
     end
   end
 end

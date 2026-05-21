@@ -42,12 +42,10 @@ bundle exec bridgetown apply https://github.com/bt-rb/bridgetown-plausible
 ## System requirements
 
 - Bundler
-- Bridgetown >= `1.3` (tested against Bridgetown 1.3.x and 2.x)
-- Ruby version per your Bridgetown version:
-  - Bridgetown 1.3: Ruby >= `3.0`
-  - Bridgetown 2.0: Ruby >= `3.1.4`
-  - Bridgetown 2.1: Ruby >= `3.2`
-  - Bridgetown 2.2: Ruby >= `3.3`
+- Ruby >= `3.1`
+- Bridgetown >= `1.3` (tested against Bridgetown 1.3.x, 2.0.x, 2.1.x, and 2.2.x)
+
+Bridgetown itself sets its own Ruby floor: 1.3.x needs `>= 2.7`, 2.0.x needs `>= 3.1`, 2.1.x and 2.2.x need `>= 3.2`. This gem requires `>= 3.1` to match what we test in CI; if you need Ruby 2.7 or 3.0 on Bridgetown 1.3, stay on `bridgetown-plausible "~> 1.1"`.
 
 ## Installation
 
@@ -78,7 +76,7 @@ Bridgetown.configure do |config|
 end
 ```
 
-Alternatively, you can configure via `bridgetown.config.yml` (see [Configuration](#configuration) below) and use the bare `init :"bridgetown-plausible"` form. Inline kwargs take precedence over YAML values when both are set.
+Alternatively, you can configure via `bridgetown.config.yml` (see [Configuration](#configuration) below) and use the bare `init :"bridgetown-plausible"` form. Precedence is per-key: any kwarg you pass overrides the matching YAML key, and keys you don't pass continue to come from YAML. So passing only `domain` in the init block will still pick up `server` from `bridgetown.config.yml` if it's set there.
 
 ## Upgrading from 1.x
 
@@ -86,7 +84,7 @@ Version 2.0 is a breaking change:
 
 - **Requires Bridgetown >= 1.3.** If you're on an older Bridgetown, stay on `bridgetown-plausible "~> 1.1"` until you can upgrade.
 - **The gem no longer auto-registers on `require`.** You must explicitly opt in by adding `init :"bridgetown-plausible"` to your `config/initializers.rb` (see [Installation](#installation)). Without this, builds calling `<%= plausible %>` will raise `NameError: undefined local variable or method 'plausible'`, and `{% plausible %}` will raise `Liquid::SyntaxError`.
-- **Ruby version floor** follows your Bridgetown version (see [System requirements](#system-requirements)). Bridgetown 2.1+ requires Ruby >= 3.2; 2.2+ requires >= 3.3.
+- **Ruby >= 3.1** (matching what we test in CI). See [System requirements](#system-requirements) for the per-Bridgetown-version Ruby floors set by Bridgetown itself.
 - **Active Support was removed from Bridgetown in 2.1.** The plugin's `.html_safe` calls continue to work via `bridgetown-foundation`, which Bridgetown ships by default — no action needed.
 
 ## Configuration
